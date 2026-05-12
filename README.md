@@ -1,4 +1,4 @@
-# 💳 Loan Default Risk Predictor
+## Loan Default Risk Predictor
 
 A machine learning web application that predicts whether a loan applicant is likely to default, built with Python, Scikit-learn, and Flask.
 
@@ -59,5 +59,5 @@ The model achieves a ROC AUC of 0.69 due to the following real-world reasons:
 ## 👤 Author
 
 ** NANDALA ANIRUDH **
-- GitHub: [@your-username](https://github.com/your-anirudhnandala8-ctrl)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/your-linkedin)
+- GitHub: (https://github.com/anirudhnandala8-ctrl)
+- LinkedIn: (https://www.linkedin.com/in/anirudh-nandala-974194408/)
