@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Risk Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>💳 Loan Default Risk Predictor</h1>
+        <p>Enter applicant details to analyse loan default risk using AI</p>
+    </div>
+
+    <!-- Error Message -->
+    {% if error %}
+    <div class="error-box">
+        ⚠️ {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Form -->
+    <form action="/predict" method="post">
+
+        <div class="form-row">
+
+            <!-- Left Column -->
+            <div class="form-col">
+
+                <div class="card">
+                    <h3>📋 Loan Details</h3>
+
+                    <div class="field-group">
+                        <label>Credit Policy</label>
+                        <select name="credit.policy" required>
+                            <option value="1">Yes — Meets criteria</option>
+                            <option value="0">No — Does not meet criteria</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Loan Purpose</label>
+                        <select name="purpose" required>
+                            <option value="debt_consolidation">Debt Consolidation</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="home_improvement">Home Improvement</option>
+                            <option value="small_business">Small Business</option>
+                            <option value="major_purchase">Major Purchase</option>
+                            <option value="educational">Educational</option>
+                            <option value="all_other">All Other</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Interest Rate <span class="hint">(e.g. 12.5 for 12.5%)</span></label>
+                        <input type="number" step="0.01" min="1" max="30"
+                               name="int.rate" placeholder="12.5" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Monthly Installment <span class="hint">(in USD)</span></label>
+                        <input type="number" step="0.01" min="0"
+                               name="installment" placeholder="300.00" required>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>💰 Income Details</h3>
+
+                    <div class="field-group">
+                        <label>Annual Income <span class="hint">(in USD)</span></label>
+                        <input type="number" step="1" min="1"
+                               name="log.annual.inc" placeholder="60000" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Debt-to-Income Ratio</label>
+                        <input type="number" step="0.01" min="0" max="100"
+                               name="dti" placeholder="15.0" required>
+                    </div>
+
+                    <!-- Loan image in empty space -->
+                    <div class="card-image">
+                        <img src="{{ url_for('static', filename='loan.jpg') }}" alt="Loan Approval">
+                        <p>Fast · Secure · Reliable</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column -->
+            <div class="form-col">
+
+                <div class="card">
+                    <h3>📊 Credit Score</h3>
+
+                    <div class="field-group">
+                        <label>FICO Score <span class="hint">(300 – 850)</span></label>
+                        <input type="number" step="1" min="300" max="850"
+                               name="fico" placeholder="700" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Credit Line Age <span class="hint">(in days)</span></label>
+                        <input type="number" step="1" min="0"
+                               name="days.with.cr.line" placeholder="3000" required>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>💳 Credit Usage</h3>
+
+                    <div class="field-group">
+                        <label>Revolving Balance <span class="hint">(in USD)</span></label>
+                        <input type="number" step="1" min="0"
+                               name="revol.bal" placeholder="5000" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Revolving Utilization <span class="hint">(in %)</span></label>
+                        <input type="number" step="0.1" min="0" max="150"
+                               name="revol.util" placeholder="40.0" required>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📁 Credit History</h3>
+
+                    <div class="field-group">
+                        <label>Inquiries in Last 6 Months</label>
+                        <input type="number" step="1" min="0"
+                               name="inq.last.6mths" placeholder="1" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Delinquencies in Last 2 Years</label>
+                        <input type="number" step="1" min="0"
+                               name="delinq.2yrs" placeholder="0" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Public Records</label>
+                        <input type="number" step="1" min="0"
+                               name="pub.rec" placeholder="0" required>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">🔍 Predict Loan Risk</button>
+
+    </form>
+
+    <!-- Result -->
+    {% if prediction %}
+    <div class="result-box {{ result_type }}">
+        <div class="result-icon">{{ '✅' if result_type == 'approved' else '❌' }}</div>
+        <div class="result-details">
+            <h2>{{ prediction }}</h2>
+            <p>Default Probability: <strong>{{ prob }}%</strong> &nbsp;|&nbsp; Threshold: 30%</p>
+            <p class="result-note">
+                {% if result_type == 'approved' %}
+                    Risk is within the acceptable limit. Applicant is likely to repay the loan.
+                {% else %}
+                    Risk is above the acceptable limit. High chance of loan default.
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
