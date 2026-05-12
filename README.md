@@ -2,15 +2,15 @@
 
 A machine learning web application that predicts whether a loan applicant is likely to default, built with Python, Scikit-learn, and Flask.
 
----
 
-## 🔍 Overview
+
+##  Overview
 
 This project uses a **Random Forest classifier** trained on LendingClub loan data to predict loan default risk in real time. Applicants enter their financial details through a web form and instantly receive an approval or rejection decision with a default probability score.
 
----
 
-## 🛠️ Tech Stack
+
+##  Tech Stack
 
 - Python, Flask
 - Scikit-learn, Random Forest
@@ -18,9 +18,9 @@ This project uses a **Random Forest classifier** trained on LendingClub loan dat
 - HTML, CSS
 - Gunicorn, Render
 
----
 
-## 📊 Model Performance
+
+##  Model Performance
 
 | Metric | Score |
 |--------|-------|
@@ -29,7 +29,7 @@ This project uses a **Random Forest classifier** trained on LendingClub loan dat
 | Estimators | 300 |
 | Max Depth | 10 |
 
-## 🧠 Why ROC AUC 0.69?
+##  Why ROC AUC 0.69?
 
 The model achieves a ROC AUC of 0.69 due to the following real-world reasons:
 
@@ -46,7 +46,7 @@ The model achieves a ROC AUC of 0.69 due to the following real-world reasons:
 
 
 
-## 🚀 Run Locally
+##  Run Locally
 
 1. Clone the repository
 2. Install dependencies: `pip install -r requirements.txt`
